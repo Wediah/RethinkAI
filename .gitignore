@@ -21,12 +21,19 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-node_modules/
-vendor/
-.env.*
-storage/app/public/* # unless you need uploaded files versioned
-storage/framework/* # cache, sessions, etc.
-bootstrap/cache/* # compiled configs
+
+# Keep directories but ignore contents
 storage/app/public/*
-storage/framework/*
+!storage/app/public/.gitkeep
+storage/framework/cache/*
+!storage/framework/cache/.gitkeep
+storage/framework/sessions/*
+!storage/framework/sessions/.gitkeep
+storage/framework/testing/*
+!storage/framework/testing/.gitkeep
+storage/framework/views/*
+!storage/framework/views/.gitkeep
+storage/logs/*
+!storage/logs/.gitkeep
 bootstrap/cache/*
+!bootstrap/cache/.gitkeep
