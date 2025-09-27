@@ -21,18 +21,12 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-public/assets/
 node_modules/
 vendor/
-.env
 .env.*
 storage/app/public/* # unless you need uploaded files versioned
 storage/framework/* # cache, sessions, etc.
 bootstrap/cache/* # compiled configs
-node_modules/
-vendor/
-.env
-.env.*
 storage/app/public/*
 storage/framework/*
 bootstrap/cache/*
