@@ -5,10 +5,10 @@
 @section('content')
     <div>
         <div class="relative">
-            <img src="{{ asset('assets/bac.png') }}" class="h-10/12 w-full object-cover" alt="landing page image"/>
+            <img src="{{ asset('assets/bac.png') }}" class="h-full md:h-10/12 w-full object-cover" alt="landing page image"/>
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div class="absolute md:top-96 top-80 left-0 text-white py-4 pl-4 md:pl-14 md:w-1/2 z-10" data-aos="fade-up">
-                <p class="text-9xl font-bold">Rethink <br> Africa <br> Intelligence</p>
+            <div class="absolute md:top-96 top-32 left-0 text-white py-4 pl-4 md:pl-14 md:w-1/2 z-10" data-aos="fade-up">
+                <p class="text-4xl md:text-9xl font-bold">Rethink <br> Africa <br> Intelligence</p>
             </div>
         </div>
         <div class="flex md:flex-row flex-col justify-center py-14 px-14 gap-7 items-center">

@@ -10,7 +10,7 @@
                 alt="landing page image"
             />
             <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-            <div class="absolute inset-0 flex flex-col justify-center py-20 px-16 text-white">
+            <div class="absolute inset-0 flex flex-col justify-center md:py-20 px-16 text-white">
                 <h1 class="text-4xl md:text-6xl font-bold" data-aos="fade-right">Impact</h1>
                 <p class="mt-6 md:mt-8 text-lg md:text-2xl max-w-4xl" data-aos="fade-up" data-aos-delay="100">
                     At RethinkAI, we believe artificial intelligence isn’t just a global trend—it’s a transformative force for Africa. From Accra to Nairobi, Lagos to Kigali, we’re building AI solutions rooted in local context, designed to solve real challenges and unlock inclusive growth across the continent.
