@@ -10,8 +10,8 @@ class EventsController extends Controller
 {
     public function index()
     {
-        $events = Events::latest()->paginate(10);
-        return view('events.index', compact('events'));
+        $events = Events::orderBy('date', 'desc')->paginate(10);
+        return view('events.index', ['events' => $events]);
     }
 
     /**
@@ -46,19 +46,21 @@ class EventsController extends Controller
             'image'       => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            // Store in S3 under 'events' folder
-            $imagePath = $request->file('image')->store('events', 's3');
 
-            // Make the file publicly accessible (optional, if bucket policy allows)
-            // Storage::disk('s3')->setVisibility($imagePath, 'public');
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+            $filePath = $image->storeAs('event-banner', $filename, 's3');
+            $validated['image'] = 'https://rethinkaibucket.s3.eu-north-1.amazonaws.com/' . $filePath;
         }
 
-        $validated['image'] = $imagePath;
 
         Events::create($validated);
 
+        if (auth()->check()) {
+            return redirect()->route('dashboard')
+                ->with('success', 'Event created successfully!');
+        }
         return redirect()->route('events.index')
             ->with('success', 'Event created successfully!');
     }
