@@ -22,4 +22,22 @@ class Events extends Model
     {
         return 'slug';
     }
+
+    protected $casts = [
+        'date' => 'date',
+    ];
+
+    public function setTimeAttribute($value)
+    {
+        $this->attributes['time'] = date('H:i', strtotime($value));
+    }
+
+    public static function getStatusOptions()
+    {
+        return [
+            'online' => 'Online',
+            'in-person' => 'In-Person'
+        ];
+    }
+
 }

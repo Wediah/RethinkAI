@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventAttendees;
 use App\Models\Events;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,12 @@ class EventsController extends Controller
     {
         $events = Events::orderBy('date', 'desc')->paginate(10);
         return view('events.index', ['events' => $events]);
+    }
+
+    public function adminIndex()
+    {
+        $events = Events::orderBy('date', 'desc')->paginate(10);
+        return view('events.admin-events', ['events' => $events]);
     }
 
     /**
@@ -46,22 +53,31 @@ class EventsController extends Controller
             'image'       => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = uniqid() . '.' . $image->getClientOriginalExtension();
-            $filePath = $image->storeAs('event-banner', $filename, 's3');
-            $validated['image'] = 'https://rethinkaibucket.s3.eu-north-1.amazonaws.com/' . $filePath;
+
+            // Store the file in S3 with public visibility
+            $filePath = $image->storeAs('event-banner', $filename, ['disk' => 's3', 'visibility' => 'public']);
+
+            // Store the full URL in the database
+            $validated['image'] = env('AWS_URL') . '/' . $filePath;
         }
 
+        $newEvent = Events::create($validated);
 
-        Events::create($validated);
+        $registerUrl = route('event.register', $newEvent->slug);
+        $qrCode = \QrCode::format('png')->size(300)->generate($registerUrl);
 
-        if (auth()->check()) {
-            return redirect()->route('dashboard')
-                ->with('success', 'Event created successfully!');
-        }
-        return redirect()->route('events.index')
+        // Store QR code in S3
+        $qrFilename = 'qrcode_' . $newEvent->slug . '.png';
+        Storage::disk('s3')->put('event-qrcodes/' . $qrFilename, $qrCode, 'public');
+
+        // Save QR code URL to event_qrcode column
+        $newEvent->event_qrcode = env('AWS_URL') . '/event-qrcodes/' . $qrFilename;
+        $newEvent->save();
+
+        return redirect()->route('admin.events')
             ->with('success', 'Event created successfully!');
     }
 
@@ -78,31 +94,77 @@ class EventsController extends Controller
 
         // Handle new image upload
         if ($request->hasFile('image')) {
-            // Delete old image from S3 (if exists)
+            // Delete old image if it exists
             if ($event->image) {
-                Storage::disk('s3')->delete($event->image);
+                // Extract the file path from the full URL
+                $oldFilePath = str_replace(env('AWS_URL') . '/', '', $event->image);
+                Storage::disk('s3')->delete($oldFilePath);
             }
 
-            $imagePath = $request->file('image')->store('events', 's3');
-            // Storage::disk('s3')->setVisibility($imagePath, 'public'); // if needed
-            $validated['image'] = $imagePath;
+            $image = $request->file('image');
+            $filename = uniqid() . '.' . $image->getClientOriginalExtension();
+
+            // Store the new file in S3 with public visibility
+            $filePath = $image->storeAs('event-banner', $filename, ['disk' => 's3', 'visibility' => 'public']);
+
+            // Store the full URL in the database
+            $validated['image'] = env('AWS_URL') . '/' . $filePath;
         }
 
         $event->update($validated);
 
-        return redirect()->route('events.index')
+        return redirect()->route('admin.events')
             ->with('success', 'Event updated successfully!');
+    }
+
+    public function register(Events $event) {
+        return view('events.register', compact('event'));
+    }
+
+    public function registerStore(Request $request, Events $event)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'newsletter' => 'nullable|boolean'
+        ]);
+
+        // Check if user already registered
+        $existingRegistration = EventAttendees::where('event_id', $event->id)
+            ->where('email', $validated['email'])
+            ->first();
+
+        if ($existingRegistration) {
+            return redirect()->back()
+                ->with('error', 'You have already registered for this event!')
+                ->withInput();
+        }
+
+        EventAttendees::create([
+            'event_id' => $event->id,
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'newsletter' => $request->has('newsletter') ? true : false,
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Successfully registered for ' . $event->name . '!')
+            ->with('redirect_after', route('events.index'));
     }
 
     public function destroy(Events $event)
     {
         if ($event->image) {
-            Storage::disk('s3')->delete($event->image);
+            // Extract the file path from the full URL
+            $filePath = str_replace(env('AWS_URL') . '/', '', $event->image);
+            Storage::disk('s3')->delete($filePath);
         }
 
         $event->delete();
 
-        return redirect()->route('events.index')
+        return redirect()->route('admin.events')
             ->with('success', 'Event deleted successfully!');
     }
 }

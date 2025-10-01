@@ -11,17 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('impacts', function (Blueprint $table) {
             $table->id();
+            $table->string('imagePath');
             $table->string('name');
             $table->string('slug');
             $table->string('image')->nullable();
-            $table->string('location');
-            $table->date('date');
-            $table->time('time');
             $table->text('description');
-            $table->enum('status', ['online', 'in-person'])->default('in-person');
-            $table->string('event_qrcode')->nullable();
+            $table->string('impact_type');
+            $table->string('external_link')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('impacts');
     }
 };

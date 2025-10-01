@@ -44,9 +44,49 @@
                     </div>
                 </div>
 
+
+
                 <!-- Right Column: Contact Form -->
                 <div class="bg-white backdrop-blur-md rounded-xl p-12" data-aos="fade-up" data-aos-delay="100">
-                    <form class="space-y-4">
+                    <!-- Success Notification with Auto-redirect -->
+                    @if(session('success'))
+                        <div id="success-notification" class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg flex items-center justify-between max-w-3xl h-24">
+                            <div class="flex items-center gap-3">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span class="font-medium">{{ session('success') }}</span>
+                            </div>
+                            <span class="text-sm">Redirecting in <span id="countdown">3</span>s...</span>
+                        </div>
+
+                        <script>
+                            let countdown = 3;
+                            const countdownElement = document.getElementById('countdown');
+                            const redirectUrl = "{{ session('redirect_after', route('contact')) }}";
+
+                            const timer = setInterval(() => {
+                                countdown--;
+                                countdownElement.textContent = countdown;
+
+                                if (countdown <= 0) {
+                                    clearInterval(timer);
+                                    window.location.href = redirectUrl;
+                                }
+                            }, 1000);
+                        </script>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg flex items-center gap-3">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="font-medium">{{ session('error') }}</span>
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('contactus') }}" class="space-y-4">
                         @csrf
                         <div class="space-y-1">
                             <label for="name">Name</label>
@@ -74,7 +114,7 @@
                             rows="5"
                             placeholder="Kindly reach out to us"
                             name="message"
-                            class="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-white placeholder-gray-300 resize-none"
+                            class="w-full px-4 py-3 bg-white/10 border border-gray-600 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent text-black placeholder-gray-300 resize-none"
                             required
                         ></textarea>
                         </div>

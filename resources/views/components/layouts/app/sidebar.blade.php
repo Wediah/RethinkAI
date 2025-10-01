@@ -14,12 +14,8 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                </flux:navlist.group>
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('events.index')" :current="request()->routeIs('events.index')" wire:navigate>{{ __('All Events') }}</flux:navlist.item>
-                </flux:navlist.group>
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-                    <flux:navlist.item icon="home" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>{{ __('New Event') }}</flux:navlist.item>
+                    <flux:navlist.item icon="table-cells" :href="route('admin.events')" :current="request()->routeIs('admin.events')" wire:navigate>{{ __('All Events') }}</flux:navlist.item>
+                    <flux:navlist.item icon="plus" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>{{ __('New Event') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

@@ -23,7 +23,23 @@
             <flux:input label="Date" type="date" name="date" placeholder="Event Date"/>
             <flux:input label="Time" type="time" name="time" placeholder="Event Time"/>
             <flux:input label="Location" type="text" name="location" placeholder="Event Location"/>
-            <flux:input label="Description" type="textarea" name="description" placeholder="Event Description"/>
+            <div class="mb-4">
+                <label for="status" class="block text-gray-700 font-medium mb-2">Event Type</label>
+                <select
+                    name="status"
+                    id="status"
+                    required
+                    class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">Select Event Type</option>
+                    <option value="online" {{ old('status') == 'online' ? 'selected' : '' }}>Online</option>
+                    <option value="in-person" {{ old('status', 'in-person') == 'in-person' ? 'selected' : '' }}>In-Person</option>
+                </select>
+                @error('status')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <flux:textarea label="Description" type="textarea" name="description" placeholder="Event Description"/>
 
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md">Create Event</button>
 
