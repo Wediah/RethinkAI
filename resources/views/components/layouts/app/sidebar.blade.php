@@ -14,11 +14,20 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
-                    <flux:navlist.item icon="table-cells" :href="route('admin.events')" :current="request()->routeIs('admin.events')" wire:navigate>{{ __('All Events') }}</flux:navlist.item>
-                    <flux:navlist.item icon="plus" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>{{ __('New Event') }}</flux:navlist.item>
+
+                    <!-- Events Folder -->
+                    <flux:navlist.group :heading="__('Events')" collapsible>
+                        <flux:navlist.item icon="table-cells" :href="route('admin.events')" :current="request()->routeIs('admin.events')" wire:navigate>{{ __('All Events') }}</flux:navlist.item>
+                        <flux:navlist.item icon="plus" :href="route('events.create')" :current="request()->routeIs('events.create')" wire:navigate>{{ __('New Event') }}</flux:navlist.item>
+                    </flux:navlist.group>
+
+                    <!-- Impact Stories Folder -->
+                    <flux:navlist.group :heading="__('Impact Stories')" collapsible>
+                        <flux:navlist.item icon="table-cells" :href="route('impact.index')" :current="request()->routeIs('impact.index')" wire:navigate>{{ __('All Impact Stories') }}</flux:navlist.item>
+                        <flux:navlist.item icon="plus" :href="route('impact.create')" :current="request()->routeIs('impact.create')" wire:navigate>{{ __('New Impact Story') }}</flux:navlist.item>
+                    </flux:navlist.group>
                 </flux:navlist.group>
             </flux:navlist>
-
             <flux:spacer />
 
             <!-- Desktop User Menu -->

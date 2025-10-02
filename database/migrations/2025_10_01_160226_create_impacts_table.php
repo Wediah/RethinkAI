@@ -12,16 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('impacts', function (Blueprint $table) {
-            $table->id();
-            $table->string('imagePath');
-            $table->string('name');
-            $table->string('slug');
-            $table->string('image')->nullable();
-            $table->text('description');
-            $table->string('impact_type');
-            $table->string('external_link')->nullable();
-            $table->date('date');
-            $table->timestamps();
+                $table->id();
+                $table->string('name');
+                $table->string('slug')->unique();
+                $table->text('description');
+                $table->string('impact_type'); // 'article', 'video', 'case-study', etc.
+                $table->enum('content_type', ['article', 'video', 'external'])->default('article');
+                $table->string('image')->nullable();
+                $table->string('video_url')->nullable(); // For YouTube/Vimeo links
+                $table->string('external_link')->nullable();
+                $table->text('content')->nullable(); // Full article content
+                $table->date('date')->nullable();
+                $table->boolean('is_published')->default(true);
+                $table->timestamps();
         });
     }
 

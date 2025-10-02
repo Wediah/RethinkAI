@@ -78,8 +78,32 @@
         </div>
         <div class="py-14 px-14">
             <h1 class=" text-2xl md:text-6xl font-bold">Impact</h1>
-            <div class="flex md:flex-row flex-col gap-3.5">
+            <div class=" py-6">
+                @php
+                    $impact = App\Models\Impact::paginate(4);
+                @endphp
 
+                <div class="flex flex-row flex-wrap gap-6" data-aos="fade-up">
+                    @foreach ($impact as $item)
+                        <div class="w-1/2 md:w-1/3 lg:w-1/4">
+                            <div class="bg-white rounded-lg shadow-md p-6">
+                                <img src="{{ $item->image }}" alt="{{ $item->name }}" class="w-full h-56 object-cover rounded-t-lg mb-4">
+                                <div class="flex flex-row items-center gap-2 mb-4">
+                                    <p class="text-gray-600 border border-gray-600 rounded-full px-4 py-1 text-sm">{{ $item->impact_type }}</p>
+                                    <p class="text-gray-600 border border-gray-600 rounded-full px-4 py-1 text-sm">{{ $item->content_type }}</p>
+                                </div>
+                                <h2 class="text-xl font-semibold mb-4">{{ $item->name }} : {{ $item->description }}</h2>
+                                <a href="{{ $item->content_type === 'article' ? route('impact.show', $item) : $item->external_link }}">
+                                    <button class="bg-black text-white px-4 py-2 flex flex-row gap-1 rounded-md">view more
+                                        <flux:icon.arrow-up-right variant="mini"/>
+                                    </button>
+                                </a>
+
+                                <p class="text-gray-600 mt-4">{{ $item->created_at->format('F, j, Y') }}</p>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>

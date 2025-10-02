@@ -1,3 +1,4 @@
+@php use App\Models\Impact; @endphp
 @extends('components.layouts.main-nav')
 @section('title', 'Main')
 
@@ -13,16 +14,49 @@
             <div class="absolute inset-0 flex flex-col justify-center md:py-20 px-16 text-white">
                 <h1 class="text-4xl md:text-6xl font-bold" data-aos="fade-right">Impact</h1>
                 <p class="mt-6 md:mt-8 text-lg md:text-2xl max-w-4xl" data-aos="fade-up" data-aos-delay="100">
-                    At RethinkAI, we believe artificial intelligence isn’t just a global trend—it’s a transformative force for Africa. From Accra to Nairobi, Lagos to Kigali, we’re building AI solutions rooted in local context, designed to solve real challenges and unlock inclusive growth across the continent.
+                    At RethinkAI, we believe artificial intelligence isn’t just a global trend—it’s a transformative
+                    force for Africa. From Accra to Nairobi, Lagos to Kigali, we’re building AI solutions rooted in
+                    local context, designed to solve real challenges and unlock inclusive growth across the continent.
 
-                    Our mission is to harness the power of AI to improve lives—whether by enhancing healthcare access in rural communities, optimizing agricultural yields for smallholder farmers, enabling smarter education tools for students, or supporting governments with data-driven policy decisions. But technology alone isn’t enough. That’s why ethics, equity, and African agency are at the heart of everything we build.
+                    Our mission is to harness the power of AI to improve lives—whether by enhancing healthcare access in
+                    rural communities, optimizing agricultural yields for smallholder farmers, enabling smarter
+                    education tools for students, or supporting governments with data-driven policy decisions. But
+                    technology alone isn’t enough. That’s why ethics, equity, and African agency are at the heart of
+                    everything we build.
 
-                    We collaborate with local developers, researchers, policymakers, and communities to co-create AI that reflects African values, languages, and aspirations. Through partnerships, capacity building, and open innovation, we’re helping to shape an AI ecosystem that is not only smart—but also fair, transparent, and truly African.
+                    We collaborate with local developers, researchers, policymakers, and communities to co-create AI
+                    that reflects African values, languages, and aspirations. Through partnerships, capacity building,
+                    and open innovation, we’re helping to shape an AI ecosystem that is not only smart—but also fair,
+                    transparent, and truly African.
                 </p>
             </div>
         </div>
-        <div>
+        <div class=" px-4 md:px-14 py-6">
+            @php
+                $impact = Impact::paginate(10);
+            @endphp
 
+            <div class="flex flex-row flex-wrap gap-6" data-aos="fade-up">
+                @foreach ($impact as $item)
+                    <div class="w-1/2 md:w-1/3 lg:w-1/4">
+                        <div class="bg-white rounded-lg shadow-md p-6">
+                            <img src="{{ $item->image }}" alt="{{ $item->name }}" class="w-full h-56 object-cover rounded-t-lg mb-4">
+                            <div class="flex flex-row items-center gap-2 mb-4">
+                                <p class="text-gray-600 border border-gray-600 rounded-full px-4 py-1 text-sm">{{ $item->impact_type }}</p>
+                                <p class="text-gray-600 border border-gray-600 rounded-full px-4 py-1 text-sm">{{ $item->content_type }}</p>
+                            </div>
+                            <h2 class="text-xl font-semibold mb-4">{{ $item->name }} : {{ $item->description }}</h2>
+                            <a href="{{ $item->content_type === 'article' ? route('impact.show', $item) : $item->external_link }}">
+                                <button class="bg-black text-white px-4 py-2 flex flex-row gap-1 rounded-md">view more
+                                    <flux:icon.arrow-up-right variant="mini"/>
+                                </button>
+                            </a>
+
+                            <p class="text-gray-600 mt-4">{{ $item->created_at->format('F, j, Y') }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\ImpactController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -41,8 +42,17 @@ Route::middleware(['auth'])->group(function () {
 //    Route::patch('event/{event}/update', [EventsController::class, 'update'])->name('events.update');
     Route::delete('event/{event}/destroy', [EventsController::class, 'destroy'])->name('events.destroy');
 
+    Route::get('impact/index', [ImpactController::class, 'index'])->name('impact.index');
+    Route::get('impact/create', [ImpactController::class, 'create'])->name('impact.create');
+    Route::post('impact/store', [ImpactController::class, 'store'])->name('impact.store');
+
+    Route::get('impact/{impact}/edit', [ImpactController::class, 'edit'])->name('impact.edit');
+    Route::patch('impact/{impact}', [ImpactController::class, 'update'])->name('impact.update');
+    Route::delete('impact/{impact}', [ImpactController::class, 'destroy'])->name('impact.destroy');
+
 });
 
+Route::get('impact/{impact}', [ImpactController::class, 'show'])->name('impact.show');
 Route::get('/event/{event}', [EventsController::class, 'show'])->name('events.show');
 Route::post('/event/{event}/register', [EventsController::class, 'registerStore'])->name('events.register.store');
 Route::get('/event/{event}/register', [EventsController::class, 'register'])->name('event.register');

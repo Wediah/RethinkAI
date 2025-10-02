@@ -8,79 +8,250 @@
         </flux:breadcrumbs>
     </div>
 
-    <div class="container mx-auto px-4 py-8 max-w-2xl">
-        <h1 class="text-3xl font-bold text-gray-900 mb-6">Create New Impact</h1>
+    <div class="max-w-3xl px-4 py-8">
 
-        <form action="{{ route('impact.store') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
+        <div>
+            <flux:heading size="lg">create a new Impact Story</flux:heading>
+            <flux:text class="mt-2">Welcome back!</flux:text>
+        </div>
+        <form action="{{ route('impact.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6 ">
             @csrf
 
-            <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Name *</label>
-                <input type="text" name="name" id="name" value="{{ old('name') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       required>
+            <!-- Content Type Selector -->
+            <div>
+                <label for="content_type" class="block text-gray-700 font-medium mb-2">Content Type *</label>
+                <select
+                    name="content_type"
+                    id="content_type"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onchange="toggleContentFields()"
+                >
+                    <option value="">Select Content Type</option>
+                    @foreach($contentTypes as $key => $label)
+                        <option value="{{ $key }}" {{ old('content_type') == $key ? 'selected' : '' }}>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('content_type')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Title -->
+            <div>
+                <label for="name" class="block text-gray-700 font-medium mb-2">Title *</label>
+                <input
+                    type="text"
+                    name="name"
+                    id="name"
+                    value="{{ old('name') }}"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Enter impact story title"
+                >
                 @error('name')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
-                <textarea name="description" id="description" rows="4"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          required>{{ old('description') }}</textarea>
+            <!-- Description/Excerpt -->
+            <div>
+                <label for="description" class="block text-gray-700 font-medium mb-2">Short Description *</label>
+                <textarea
+                    name="description"
+                    id="description"
+                    rows="3"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Brief summary (max 500 characters)"
+                    maxlength="500"
+                >{{ old('description') }}</textarea>
                 @error('description')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="impact_type" class="block text-sm font-medium text-gray-700 mb-2">Impact Type *</label>
-                <input type="text" name="impact_type" id="impact_type" value="{{ old('impact_type') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       required>
+            <!-- Impact Category -->
+            <div>
+                <label for="impact_type" class="block text-gray-700 font-medium mb-2">Impact Category *</label>
+                <select
+                    name="impact_type"
+                    id="impact_type"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    <option value="">Select Category</option>
+                    @foreach($impactTypes as $key => $label)
+                        <option value="{{ $key }}" {{ old('impact_type') == $key ? 'selected' : '' }}>
+                            {{ $label }}
+                        </option>
+                    @endforeach
+                </select>
                 @error('impact_type')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="date" class="block text-sm font-medium text-gray-700 mb-2">Date</label>
-                <input type="date" name="date" id="date" value="{{ old('date') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('date')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="external_link" class="block text-sm font-medium text-gray-700 mb-2">External Link</label>
-                <input type="url" name="external_link" id="external_link" value="{{ old('external_link') }}"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       placeholder="https://example.com">
-                @error('external_link')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Image</label>
-                <input type="file" name="image" id="image"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       accept="image/*">
+            <!-- Featured Image (Always shown) -->
+            <div>
+                <label for="image" class="block text-gray-700 font-medium mb-2">Featured Image *</label>
+                <input
+                    type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    required
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    onchange="previewImage(event)"
+                >
+                <p class="text-sm text-gray-500 mt-1">Recommended size: 1200x630px</p>
+                <img id="image-preview" class="mt-4 max-w-md rounded-lg hidden" alt="Image preview">
                 @error('image')
-                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div class="flex justify-end space-x-3">
-                <a href="{{ route('impact.index') }}" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors">
+            <!-- Article Content (Conditional) -->
+            <div id="article-fields" class="hidden">
+                <label for="content" class="block text-gray-700 font-medium mb-2">Article Content *</label>
+                <textarea
+                    name="content"
+                    id="content"
+                    rows="15"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono"
+                    placeholder="Write your full article content here. You can use Markdown for formatting (e\.g\. paragraphs, headings, lists)\.\.\."
+                >{{ old('content') }}</textarea>
+                @error('content')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Video URL (Conditional) -->
+            <div id="video-fields" class="hidden">
+                <label for="video_url" class="block text-gray-700 font-medium mb-2">YouTube Video URL *</label>
+                <input
+                    type="url"
+                    name="video_url"
+                    id="video_url"
+                    value="{{ old('video_url') }}"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                >
+                <p class="text-sm text-gray-500 mt-1">Paste the full YouTube video URL</p>
+                @error('video_url')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- External Link (Conditional) -->
+            <div id="external-fields" class="hidden">
+                <label for="external_link" class="block text-gray-700 font-medium mb-2">External Link *</label>
+                <input
+                    type="url"
+                    name="external_link"
+                    id="external_link"
+                    value="{{ old('external_link') }}"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://example.com/article"
+                >
+                @error('external_link')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Date -->
+            <div>
+                <label for="date" class="block text-gray-700 font-medium mb-2">Publication Date</label>
+                <input
+                    type="date"
+                    name="date"
+                    id="date"
+                    value="{{ old('date', date('Y-m-d')) }}"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                @error('date')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <!-- Publish Status -->
+            <div class="flex items-center gap-3">
+                <input
+                    type="checkbox"
+                    name="is_published"
+                    id="is_published"
+                    value="1"
+                    {{ old('is_published', true) ? 'checked' : '' }}
+                    class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                >
+                <label for="is_published" class="text-gray-700">Publish immediately</label>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="flex gap-4 pt-4  ">
+                <button
+                    type="submit"
+                    class="text-white px-6 py-3 rounded-lg font-medium cursor-pointer bg-blue-500 hover:bg-blue-600"
+                >
+                    Create Impact Story
+                </button>
+                <a
+                    href="{{ route('impact.index') }}"
+                    class="bg-gray-500 hover:bg-gray-600 text-black px-6 py-3 rounded-lg font-medium"
+                >
                     Cancel
                 </a>
-                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                    Create Impact
-                </button>
             </div>
         </form>
     </div>
+
+    <script>
+        function toggleContentFields() {
+            const contentType = document.getElementById('content_type').value;
+
+            // Hide all conditional fields
+            document.getElementById('article-fields').classList.add('hidden');
+            document.getElementById('video-fields').classList.add('hidden');
+            document.getElementById('external-fields').classList.add('hidden');
+
+            // Show relevant field
+            if (contentType === 'article') {
+                document.getElementById('article-fields').classList.remove('hidden');
+                document.getElementById('content').required = true;
+                document.getElementById('video_url').required = false;
+                document.getElementById('external_link').required = false;
+            } else if (contentType === 'video') {
+                document.getElementById('video-fields').classList.remove('hidden');
+                document.getElementById('content').required = false;
+                document.getElementById('video_url').required = true;
+                document.getElementById('external_link').required = false;
+            } else if (contentType === 'external') {
+                document.getElementById('external-fields').classList.remove('hidden');
+                document.getElementById('content').required = false;
+                document.getElementById('video_url').required = false;
+                document.getElementById('external_link').required = true;
+            }
+        }
+
+        function previewImage(event) {
+            const preview = document.getElementById('image-preview');
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleContentFields();
+        });
+    </script>
 </x-layouts.app>
