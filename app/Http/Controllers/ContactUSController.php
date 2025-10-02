@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactUS;
+use App\Models\ContactUs;
 use Illuminate\Http\Request;
 
 class ContactUSController extends Controller
@@ -16,7 +16,7 @@ class ContactUSController extends Controller
             'message' => 'required|string',
         ]);
 
-        ContactUS::create($request->all());
+        ContactUs::create($request->all());
 
         return redirect()->back()->with('success', 'Thank you for contacting us!');
     }
