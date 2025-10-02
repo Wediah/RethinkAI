@@ -3,7 +3,6 @@
 /public/hot
 /public/storage
 /storage/*.key
-
 /vendor
 .env
 .env.backup
@@ -36,3 +35,5 @@ storage/logs/*
 !storage/logs/.gitkeep
 bootstrap/cache/*
 !bootstrap/cache/.gitkeep
+
+# Note: public/build/ is NOT ignored - this is where Vite puts production assets
