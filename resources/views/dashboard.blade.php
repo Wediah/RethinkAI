@@ -1,14 +1,13 @@
-@php use App\Models\ContactUs;use App\Models\EventAttendees;use App\Models\Events;use App\Models\Impact; @endphp
 <x-layouts.app :title="__('Dashboard')">
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         @php
-            $allUpcomingEventsCount = Events::where('date', '>=', now())->count();
-            $allEventsCount = Events::count();
-            $allImpactsCount = Impact::count();
-            $allContactUsCount = ContactUs::count();
-            $allAttendeesCount = EventAttendees::count();
+            $allUpcomingEventsCount = \App\Models\Events::where('date', '>=', now())->count();
+            $allEventsCount = \App\Models\Events::count();
+            $allImpactsCount = \App\Models\Impact::count();
+            $allContactUsCount = \App\Models\ContactUs::count();
+            $allAttendeesCount = \App\Models\EventAttendees::count();
 
-            $allContactUs = ContactUs::paginate(20);
+            $allContactUs = \App\Models\ContactUS::paginate(20);
         @endphp
         <div class="grid auto-rows-min gap-4 md:grid-cols-5">
             <div class="relative bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-xl border border-blue-200 dark:border-blue-700 p-6 group hover:shadow-lg transition-all duration-300">
