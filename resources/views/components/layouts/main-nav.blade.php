@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RethinkAI | @yield('title')</title>
-    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="icon" href="{{ asset('assets/logo.jpg') }}" type="image/x-icon">
     @vite('resources/css/app.css')
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flow bite.min.css" rel="stylesheet" />
