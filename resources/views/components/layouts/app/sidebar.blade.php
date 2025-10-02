@@ -26,6 +26,9 @@
                         <flux:navlist.item icon="table-cells" :href="route('impact.index')" :current="request()->routeIs('impact.index')" wire:navigate>{{ __('All Impact Stories') }}</flux:navlist.item>
                         <flux:navlist.item icon="plus" :href="route('impact.create')" :current="request()->routeIs('impact.create')" wire:navigate>{{ __('New Impact Story') }}</flux:navlist.item>
                     </flux:navlist.group>
+                    <flux:navlist.group :heading="__('Users')" collapsible>
+                        <flux:navlist.item icon="table-cells" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>{{ __('All Users') }}</flux:navlist.item>
+                    </flux:navlist.group>
                 </flux:navlist.group>
             </flux:navlist>
             <flux:spacer />

@@ -3,10 +3,12 @@
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\EventsController;
 use App\Http\Controllers\ImpactController;
+use App\Http\Controllers\UserController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\AdminOnly;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,14 +23,18 @@ Route::get('/impact', function () {
     return view('impact');
 })->name('impact');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+
 Route::get('/events', [EventsController::class, 'index'])->name('events.index');
 Route::post('/contactus', [ContactUsController::class, 'store'])->name('contactus');
 
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::view('dashboard', 'dashboard')
+        ->middleware(['auth', 'verified'])
+        ->name('dashboard');
+    Route::put('/users/{user}/make-admin', [UserController::class, 'makeAdmin'])->name('users.make-admin');
+    Route::put('/users/{user}/remove-admin', [UserController::class, 'removeAdmin'])->name('users.remove-admin');
+    Route::view('admins/all', 'users.index')->name('users.index');
     Route::redirect('settings', 'settings/profile');
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
