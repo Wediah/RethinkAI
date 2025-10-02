@@ -10,9 +10,8 @@
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
-@if(app()->isProduction())
-    <link rel="stylesheet" href="{{ asset('build/assets/app-BNumen2h.css') }}">
-@else
+<script src="https://cdn.tailwindcss.com"></script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-@endif
+
 @fluxAppearance
