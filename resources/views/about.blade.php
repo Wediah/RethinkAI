@@ -15,10 +15,10 @@
                 <div class="container mx-auto flex flex-col md:flex-row items-center gap-12">
                     <div class="md:w-1/2 space-y-6" data-aos="fade-up">
                         <h1 class="text-4xl md:text-5xl font-bold leading-tight">
-                            We’re driven by the unending edge to know more.
+                            We’re driven by the unending urge to know more.
                         </h1>
                         <p class="text-lg opacity-90">
-                            As an organization making giant efforts in making Artificial Intelligence accessible in Africa, we maintain a portfolio of research-driven projects in every aspect of life—from product innovation to infrastructure goals—while producing individuals and teams with the power to reach their potentials.
+                            As an organization making giant efforts in making Artificial Intelligence accessible in Africa, we maintain a portfolio of research-driven projects in every aspect of life from product innovation to infrastructure goals while producing individuals and teams with the power to reach their potentials.
                         </p>
                     </div>
                     <div class="md:w-1/2 flex justify-center" data-aos="fade-left" data-aos-delay="100">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="md:w-2/3">
                         <p class="text-gray-700 leading-relaxed">
-                            At RethinkAI, we cultivate a dynamic, collaborative work culture where teamwork and knowledge-sharing fuel our mission to make AI accessible across Africa. Our cross-functional teams—spanning engineers, researchers, and event designers—work closely through weekly "AI Jam Sessions" and "Fail Forward Fridays," creating a space where ideas are openly exchanged, experiments are celebrated, and setbacks become learning opportunities. We empower every team member to contribute through decentralized squads that own projects end-to-end and quarterly Innovation Sprints where any employee can pitch solutions tailored to African needs, like our Hausa-speaking chatbot or agri-tech tools for smallholder farmers. By documenting insights in shared wikis, recognizing peer contributions through "Shine Awards," and hosting monthly Impact Showcases, we ensure collaboration isn't just encouraged—it's the backbone of how we build inclusive, research-driven AI products and events that truly serve Africa’s communities. Together, we don’t just innovate; we elevate each other and the continent we’re proud to call home.
+                            At RethinkAI, we cultivate a dynamic, collaborative work culture where teamwork and knowledge-sharing fuel our mission to make AI accessible across Africa. Our cross-functional teams spanning engineers, researchers, and event designers work closely through weekly "AI Jam Sessions" and "Fail Forward Fridays," creating a space where ideas are openly exchanged, experiments are celebrated, and setbacks become learning opportunities. We empower every team member to contribute through decentralized squads that own projects end-to-end and quarterly Innovation Sprints where any employee can pitch solutions tailored to African needs, like our Hausa-speaking chatbot or agri-tech tools for smallholder farmers. By documenting insights in shared wikis, recognizing peer contributions through "Shine Awards," and hosting monthly Impact Showcases, we ensure collaboration isn't just encouraged it's the backbone of how we build inclusive, research-driven AI products and events that truly serve Africa’s communities. Together, we don’t just innovate; we elevate each other and the continent we’re proud to call home.
                         </p>
                     </div>
                 </div>

@@ -25,22 +25,34 @@
                     <div class="space-y-4">
                         <div class="flex flex-col space-y-2">
                             <h1 class="font-semibold text-lg md:text-xl">Email</h1>
-                            <span class="text-black">info@example.com</span>
+                            <span class="text-black">info@rethinkailabs.com</span>
                         </div>
 
                         <div class="flex flex-col space-x-2">
                             <h1 class="font-semibold text-lg md:text-xl">Phone</h1>
-                            <span class="text-black">1800 123 4567</span>
+                            <span class="text-black">+233 24 808 9472</span>
+                        </div>
+
+                        <div class="flex flex-col space-y-2">
+                            <h1 class="font-semibold text-lg md:text-xl">Address</h1>
+                            <span class="text-black">
+                                GA-079-3146 <br>
+                                15th Sun Street RingRoad <br>
+                                Adjacent Paloma Hotel <br>
+                                Accra
+                            </span>
                         </div>
 
                         <p class="text-black">Monday to Friday - 9:00 am to 7:00 pm</p>
                     </div>
 
                     <div class="mt-8">
+                        <a aria-label="Chat on WhatsApp" href="https://wa.me/+233248089472">
                         <button class="bg-black text-white rounded-full py-2 px-4 flex flex-row items-center gap-2">
                             Live chat
                             <i class='bx bx-right-arrow-alt bg-white text-white rounded-full'></i>
                         </button>
+                        </a>
                     </div>
                 </div>
 
