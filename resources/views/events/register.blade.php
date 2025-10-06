@@ -18,8 +18,8 @@
         </div>
 
         <div class="px-4 md:px-16 pb-10">
-            <flux:heading size="xl">Register</flux:heading>
-            <flux:text class="mt-2 text-lg">Fill out this form to register for this event.</flux:text>
+            <flux:heading size="xl" class="text-black">Register</flux:heading>
+            <flux:text class="mt-2 text-lg text-black">Fill out this form to register for this event.</flux:text>
 
             <!-- Success Notification with Auto-redirect -->
             @if(session('success'))
@@ -69,6 +69,7 @@
                     placeholder="Your Full Name"
                     value="{{ old('name') }}"
                     required
+                    class="border border-black rounded"
                 />
 
                 <flux:input
@@ -78,6 +79,7 @@
                     placeholder="kofi@example.com"
                     value="{{ old('email') }}"
                     required
+                    class="border border-black rounded"
                 />
 
                 <flux:input
@@ -87,6 +89,7 @@
                     placeholder="Your Phone Number"
                     value="{{ old('phone') }}"
                     required
+                    class="border border-black rounded"
                 />
 
                 <div class="flex items-start gap-3">

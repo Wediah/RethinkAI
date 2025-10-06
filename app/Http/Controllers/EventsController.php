@@ -15,6 +15,13 @@ class EventsController extends Controller
         return view('events.index', ['events' => $events]);
     }
 
+    public function allEventAttendees(Events $event, Request $request)
+    {
+        $attendees = EventAttendees::where('event_id', $event->id)
+            ->orderBy('created_at', 'desc')->paginate(10);
+        return view('events.all-attendees', ['attendees' => $attendees, 'event' => $event]);
+    }
+
     public function adminIndex()
     {
         $events = Events::orderBy('date', 'desc')->paginate(10);

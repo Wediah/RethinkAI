@@ -41,6 +41,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('settings/appearance', Appearance::class)->name('settings.appearance');
     //Events
     Route::get('admin/events', [EventsController::class, 'adminIndex'])->name('admin.events');
+
+    Route::get('admin/{event}/attendees', [EventsController::class, 'allEventAttendees'])->name('admin.attendees');
     Route::get('event/new', [EventsController::class, 'create'])->name('events.create');
     Route::post('event/create', [EventsController::class, 'store'])->name('events.store');
     Route::get('event/{event}/edit', [EventsController::class, 'edit'])->name('events.edit');

@@ -27,6 +27,7 @@
                             <span>{{ $event->location }}</span>
                         </div>
                         <div class="flex flex-row items-center gap-2">
+                            <a href="{{ route('admin.attendees', $event) }}" class="text-black">View Attendees</a>
                             <a href="{{ route('events.edit', $event) }}"><flux:icon.pencil-square class="text-green-600"/></a>
                             <form method="POST" action="{{ route('events.destroy', $event) }}">
                                 @csrf
