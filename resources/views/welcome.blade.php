@@ -69,7 +69,7 @@
         <div class="flex md:flex-row flex-col justify-center py-14 px-14 gap-7 items-center">
             <img src="{{ asset('assets/3P9A3043.jpg') }}" class="w-full h-full md:w-1/2 md:h-96 object-cover" alt="second image" data-aos="fade-right"/>
             <div class="w-full md:w-1/2 h-full md:h-96 flex flex-col justify-center" data-aos="fade-up" data-aos-delay="100">
-                <p class="md:w-3/4 text-2xl text-gray-400">Rethink Africa Intelligence (RAI) is a visionary platform born from the strategic collaboration between Rethink Investment (Africa) and IoT Network Hub. It is designed to catapult Africa to the forefront of the global AI revolution by fostering an ecosystem of innovation, talent, and sustainable impact. </p>
+                <p class="md:w-full text-2xl text-gray-400 flex-wrap">Rethink Africa Intelligence (RAI) is a visionary platform born from the strategic collaboration between Rethink Investment (Africa) and IoT Network Hub. It is designed to catapult Africa to the forefront of the global AI revolution by fostering an ecosystem of innovation, talent, and sustainable impact. </p>
                 <a href="/about" class="pt-3.5 cursor-pointer">
                     <button class="p-3.5 border border-black flex items-center group">
                         Learn more
